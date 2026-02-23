@@ -58,28 +58,28 @@ export default function ResultDisplay({
     bestOf,
     mode,
 }: Props) {
-    // ── Waiting for opponent (online) ────────────────────────────────────
-    if (phase === "waiting") {
-        return (
-            <div className="flex flex-col items-center gap-3 h-36 justify-center">
-                <div className="flex gap-2">
-                    {[0, 1, 2].map((i) => (
-                        <span
-                            key={i}
-                            className="w-3 h-3 rounded-full bg-purple-400"
-                            style={{
-                                animation: `pulse-dot 0.8s ease-in-out ${i * 0.18}s infinite`,
-                            }}
-                        />
-                    ))}
-                </div>
-                <p className="text-purple-300 text-sm tracking-widest uppercase">
-                    Waiting for opponent…
-                </p>
-                <style>{`@keyframes pulse-dot { 0%,100%{transform:translateY(0);opacity:.3} 50%{transform:translateY(-8px);opacity:1} }`}</style>
-            </div>
-        );
-    }
+    // // ── Waiting for opponent (online) ────────────────────────────────────
+    // if (phase === "waiting") {
+    //     return (
+    //         <div className="flex flex-col items-center gap-3 h-36 justify-center">
+    //             <div className="flex gap-2">
+    //                 {[0, 1, 2].map((i) => (
+    //                     <span
+    //                         key={i}
+    //                         className="w-3 h-3 rounded-full bg-purple-400"
+    //                         style={{
+    //                             animation: `pulse-dot 0.8s ease-in-out ${i * 0.18}s infinite`,
+    //                         }}
+    //                     />
+    //                 ))}
+    //             </div>
+    //             <p className="text-purple-300 text-sm tracking-widest uppercase">
+    //                 Waiting for opponent…
+    //             </p>
+    //             <style>{`@keyframes pulse-dot { 0%,100%{transform:translateY(0);opacity:.3} 50%{transform:translateY(-8px);opacity:1} }`}</style>
+    //         </div>
+    //     );
+    // }
 
     // ── CPU thinking ─────────────────────────────────────────────────────
     if (phase === "revealing") {

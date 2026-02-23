@@ -3,18 +3,22 @@ import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 
-export default function GameLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex min-h-screen">
-      <Sidebar />
+export default function GameLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <div className="flex min-h-screen">
+            <Sidebar />
 
-      <div className="flex flex-1 flex-col">
-        <Header />
+            <div className="flex flex-1 flex-col">
+                <Header />
 
-        <main className="flex-1">{children}</main>
+                <main className="flex-1 bg-[#282357]">{children}</main>
 
-        <Footer />
-      </div>
-    </div>
-  );
+                <Footer />
+            </div>
+        </div>
+    );
 }
