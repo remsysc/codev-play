@@ -27,12 +27,7 @@ export class RockPaperScissorsService extends GameService<RPSModel> {
     return this.model.setPlayer2AndStart(gameId, userId);
   }
 
-  async playMove(
-    gameId: string,
-    userId: number | null,
-    player: "p1_choice" | "p2_choice",
-    choice: RPSType,
-  ) {
+  async playMove(gameId: string, userId: number | null, choice: RPSType) {
     const game = await this.model.getGameData(gameId);
     if (!game) throw new Error("Game not found");
 
@@ -57,7 +52,7 @@ export class RockPaperScissorsService extends GameService<RPSModel> {
       throw new Error("Invalid move.");
     }
 
-    const newGame = await this.model.updateChoice(gameId, player, choice);
+    const newGame = await this.model.updateChoice(gameId, userId, choice);
 
     if (newGame.p1_choice != null && newGame.p2_choice != null) {
       const roundWinner = checkScore(newGame.p1_choice, newGame.p2_choice);

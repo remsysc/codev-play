@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import AppError from "./middleware/AppError";
 import UserRoutes from "./routes/auth.UserRoutes";
 import TicTacToeRoutes from "./routes/tictactoe.route";
+import RPSRoutes from "./routes/rps.route";
 // Utils
 import cors from "cors";
 import dotenv from "dotenv";
@@ -44,6 +45,7 @@ app.get("/api", (_req: Request, res: Response) => {
 
 app.use("/api/auth", UserRoutes);
 app.use("/api/tictactoe", TicTacToeRoutes);
+app.use("/api/rps", RPSRoutes);
 
 app.post("/logout", (req: Request, res: Response) => {
   res.clearCookie("token", {

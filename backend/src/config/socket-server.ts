@@ -25,7 +25,7 @@ export function initializeSocket(server: HTTPServer) {
       userSocketMap.set(userId, socket.id);
     }
 
-    console.log("A user connected", socket.id);
+    console.log("A user connected", socket.id, userSocketMap);
 
     // ROOM MANAGEMENT
 
