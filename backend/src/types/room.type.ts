@@ -3,6 +3,9 @@ export interface Room {
   name: string;
   players: Set<string>;
   createdAt: Date;
+  gameType?: "tictactoe" | "snake" | "rps";
+  gameState?: any;
+  gameId?: string;
 }
 
 export interface RoomInfo {
@@ -11,4 +14,6 @@ export interface RoomInfo {
   playerCount: number;
   players: string[];
   createdAt: Date;
+  gameType?: string;
+  gameId?: string;
 }

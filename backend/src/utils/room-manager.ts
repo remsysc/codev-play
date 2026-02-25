@@ -1,15 +1,16 @@
-import { Room, RoomInfo } from "../types/room.types";
+import { Room, RoomInfo } from "@/types/room.type";
 
 export class RoomManager {
   private rooms: Map<string, Room> = new Map();
 
-  createRoom(hostId: string, roomName?: string): Room {
+  createRoom(hostId: string, roomName?: string, gameType?: "tictactoe" | "snake" | "rps"): Room {
     const roomId = this.generateRoomId();
     const room: Room = {
       id: roomId,
       name: roomName || `Room ${roomId}`,
       players: new Set([hostId]),
       createdAt: new Date(),
+      gameType,
     };
     this.rooms.set(roomId, room);
     return room;
@@ -47,6 +48,8 @@ export class RoomManager {
       playerCount: room.players.size,
       players: Array.from(room.players),
       createdAt: room.createdAt,
+      gameType: room.gameType,
+      gameId: room.gameId,
     };
   }
 
@@ -57,6 +60,8 @@ export class RoomManager {
       playerCount: room.players.size,
       players: Array.from(room.players),
       createdAt: room.createdAt,
+      gameType: room.gameType,
+      gameId: room.gameId,
     }));
   }
 
@@ -71,5 +76,19 @@ export class RoomManager {
 
   private generateRoomId(): string {
     return Math.random().toString(36).substring(2, 8).toUpperCase();
+  }
+
+  setGameId(roomId: string, gameId: string): boolean {
+    const room = this.rooms.get(roomId);
+    if (!room) return false;
+    room.gameId = gameId;
+    return true;
+  }
+
+  setGameState(roomId: string, gameState: any): boolean {
+    const room = this.rooms.get(roomId);
+    if (!room) return false;
+    room.gameState = gameState;
+    return true;
   }
 }

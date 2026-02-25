@@ -6,8 +6,8 @@ import {
   resetGameController,
   listActiveGamesController,
   joinGameController,
-} from "../controllers/tictactoe.controller";
-import { auth } from "../middleware/auth.middleware";
+} from "@/controllers/tictactoe.controller";
+import { auth } from "@/middleware/auth.middleware";
 
 const router = Router();
 

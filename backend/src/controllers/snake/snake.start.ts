@@ -1,16 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-import { initializeGameState } from "../../services/snake.initialGamestate.services";
-import { generateFood } from "../../services/snake.food.services";
-import { pool } from "../../config/db";
-import {
-  snakeMovement,
-  wallCollision,
-  selfCollision,
-  invalidDirectionChange,
-} from "../../services/snake.movement.services";
-import { GameState, Directions } from "../../models/snake.model";
-import { eatFood } from "../../services/snake.food.services";
-import logger from "../../utils/logger";
+import { initializeGameState } from "@/services/snake/initial-game-state";
+import { generateFood } from "@/services/snake/food";
+import { pool } from "@/config/db";
+import { snakeMovement, wallCollision, selfCollision, invalidDirectionChange } from "@/services/snake/movement";
+import { GameState } from "@/types/snake.type";
+import { eatFood } from "@/services/snake/food";
+import logger from "@/utils/logger";
 
 export async function startGame(req: Request, res: Response, next: NextFunction) {
   try {

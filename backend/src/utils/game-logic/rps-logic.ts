@@ -8,11 +8,7 @@ export const isValidRPSMove = (choice: string): boolean => {
 };
 
 /* Winner Validation, has Best-Of-N support */
-export const checkWinner = (
-  p1_points: number,
-  p2_points: number,
-  n: number,
-): Player => {
+export const checkWinner = (p1_points: number, p2_points: number, n: number): Player => {
   const targetPoints = Math.floor(n / 2) + 1;
   if (p1_points >= targetPoints) {
     return 1;

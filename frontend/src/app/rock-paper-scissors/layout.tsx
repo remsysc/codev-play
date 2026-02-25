@@ -1,7 +1,7 @@
 import React from "react";
 import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
-import Footer from "@/components/footer";
+import Footer from "@/components/layout/Footer";
 
 export default function GameLayout({
     children,
