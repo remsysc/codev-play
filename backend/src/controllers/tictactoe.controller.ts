@@ -27,8 +27,13 @@ export const joinGameController = async (req: Request, res: Response) => {
     const gameId = String(req.params?.gameId);
 
     const game = await tttService.joinGame(gameId, userId);
+    console.log(game);
+
     const socketId = userSocketMap.get(String(userId));
+    console.log(socketId);
+
     const playerRoom = socketId ? roomManager.getPlayerRoom(socketId) : null;
+    console.log(playerRoom);
 
     if (!playerRoom) {
       res.status(404).json({ error: "User has not joined a room!" });
