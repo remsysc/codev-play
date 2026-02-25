@@ -1,5 +1,5 @@
 import morgan, { StreamOptions } from "morgan";
-import logger from "../utils/logger";
+import logger from "@/utils/logger";
 
 // Stream for Morgan to use Winston
 const stream: StreamOptions = {

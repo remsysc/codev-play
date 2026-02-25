@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { ApiResponse } from "../utils/apiResponse";
+import { ApiResponse } from "@/utils/api-response";
 
 export const auth = (req: Request, res: Response, next: NextFunction) => {
   try {

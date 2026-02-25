@@ -1,4 +1,4 @@
-import { GameModel } from "../models/game.model";
+import { GameModel } from "@/models/game.model";
 
 export class GameService<T extends GameModel<any>> {
   constructor(protected model: T) {}

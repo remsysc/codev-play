@@ -1,7 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { Server as HTTPServer } from "http";
-import { RoomManager } from "../utils/RoomManager";
-import logger from "../utils/logger";
+import { RoomManager } from "@/utils/room-manager";
+import logger from "@/utils/logger";
 import { registerRoomEvents, registerGameEvents, registerChatEvents, registerDisconnectEvents } from "./handlers";
 
 export const userSocketMap = new Map<string, string>();

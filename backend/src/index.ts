@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
-import AppError from "./middleware/AppError";
-import UserRoutes from "./routes/auth.UserRoutes";
-import snakeRoutes from "./routes/snake.route";
-import ticTacToeRoutes from "./routes/tictactoe.route";
+import AppError from "@/middleware/app-error";
+import UserRoutes from "@/routes/auth.route";
+import snakeRoutes from "@/routes/snake.route";
+import ticTacToeRoutes from "@/routes/tictactoe.route";
 
 // Utils
 import cors from "cors";

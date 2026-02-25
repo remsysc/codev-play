@@ -1,6 +1,6 @@
-import { pool } from "../config/db";
-import { Board } from "../utils/tictactoe.logic";
-import { GameModel } from "./game.model";
+import { pool } from "@/config/db";
+import { Board } from "@/utils/game-logic/tictactoe-logic";
+import { GameModel } from "@/models/game.model";
 
 export class ticTacToeModel extends GameModel {
   async createGame(gameData: { board: Board; currentPlayer: string }, userId: number | null) {

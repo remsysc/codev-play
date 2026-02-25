@@ -1,7 +1,7 @@
-import { RPSModel } from "../models/rps.model";
-import { RPSType } from "../utils/rps.logic";
-import { GameService } from "./game.service";
-import { isValidRPSMove, checkWinner, checkScore } from "../utils/rps.logic";
+import { RPSModel } from "@/models/rps.model";
+import { RPSType } from "@/utils/rps.logic";
+import { GameService } from "@/services/game.service";
+import { isValidRPSMove, checkWinner, checkScore } from "@/utils/rps.logic";
 
 export class RockPaperScissorsService extends GameService<RPSModel> {
   constructor(model: RPSModel) {
@@ -19,20 +19,13 @@ export class RockPaperScissorsService extends GameService<RPSModel> {
       throw new Error("Rock-Paper-Scissors game is full!");
     }
     if (!game.player_one) {
-      throw new Error(
-        "Rock-Paper-Scissors game has no host. There must be a player one.",
-      );
+      throw new Error("Rock-Paper-Scissors game has no host. There must be a player one.");
     }
 
     return this.model.setPlayer2AndStart(gameId, userId);
   }
 
-  async playMove(
-    gameId: string,
-    userId: number | null,
-    player: "p1_choice" | "p2_choice",
-    choice: RPSType,
-  ) {
+  async playMove(gameId: string, userId: number | null, player: "p1_choice" | "p2_choice", choice: RPSType) {
     const game = await this.model.getGameData(gameId);
     if (!game) throw new Error("Game not found");
 
@@ -48,9 +41,7 @@ export class RockPaperScissorsService extends GameService<RPSModel> {
       (game.player_one == userId && game.p1_choice != null) ||
       (game.player_two == userId && game.p2_choice != null)
     ) {
-      throw new Error(
-        "You already made a move! Please wait for the other player to finish.",
-      );
+      throw new Error("You already made a move! Please wait for the other player to finish.");
     }
 
     if (!isValidRPSMove(choice)) {
@@ -69,8 +60,7 @@ export class RockPaperScissorsService extends GameService<RPSModel> {
       if (roundWinner === 2) p2Points++;
 
       const hasWinner = checkWinner(p1Points, p2Points, newGame.best_of_N);
-      const currentRound =
-        hasWinner === 0 ? newGame.current_round : newGame.current_Round + 1;
+      const currentRound = hasWinner === 0 ? newGame.current_round : newGame.current_Round + 1;
 
       const gameDataPayload = {
         current_round: currentRound,

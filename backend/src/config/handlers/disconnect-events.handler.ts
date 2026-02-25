@@ -1,9 +1,8 @@
 import { Server, Socket } from "socket.io";
-import { RoomManager } from "../../utils/RoomManager";
-import logger from "../../utils/logger";
+import { RoomManager } from "@/utils/room-manager";
+import logger from "@/utils/logger";
 
 export function registerDisconnectEvents(io: Server, socket: Socket, roomManager: RoomManager) {
-  
   socket.on("disconnect", (reason) => {
     logger.info(`User ${socket.id} disconnected`, { reason });
 

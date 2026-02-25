@@ -1,4 +1,4 @@
-import { Room, RoomInfo } from "../types/room.types";
+import { Room, RoomInfo } from "@/types/room.type";
 
 export class RoomManager {
   private rooms: Map<string, Room> = new Map();

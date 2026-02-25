@@ -1,10 +1,9 @@
 import { Server, Socket } from "socket.io";
-import { RoomManager } from "../../utils/RoomManager";
-import logger from "../../utils/logger";
+import { RoomManager } from "@/utils/room-manager";
+import logger from "@/utils/logger";
 
 export function registerRoomEvents(io: Server, socket: Socket, roomManager: RoomManager) {
-  
-  socket.on("room:create", (data: { roomName?: string; gameType?: 'tictactoe' | 'snake' | 'rps' }) => {
+  socket.on("room:create", (data: { roomName?: string; gameType?: "tictactoe" | "snake" | "rps" }) => {
     try {
       const room = roomManager.createRoom(socket.id, data?.roomName, data?.gameType);
       socket.join(room.id);

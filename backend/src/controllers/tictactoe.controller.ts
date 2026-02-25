@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-import { getIO } from "../config/socket-server";
-import { TicTacToeService } from "../services/tictactoaGame.service";
-import { roomManager, userSocketMap } from "../config/socket-server";
-import { ticTacToeModel } from "../models/tictactoe.model";
-import logger from "../utils/logger";
+import { getIO } from "@/config/socket-server";
+import { TicTacToeService } from "@/services/tictactoe/tictactoe.service";
+import { roomManager, userSocketMap } from "@/config/socket-server";
+import { ticTacToeModel } from "@/models/tictactoe.model";
 
 const tttService = new TicTacToeService(new ticTacToeModel());
 

@@ -1,6 +1,6 @@
-import { checkWinner, initializedBoard, isDraw, isValidMove } from "../utils/tictactoe.logic";
-import { ticTacToeModel } from "../models/tictactoe.model";
-import { GameService } from "./game.service";
+import { checkWinner, initializedBoard, isDraw, isValidMove } from "@/utils/game-logic/tictactoe-logic";
+import { ticTacToeModel } from "@/models/tictactoe.model";
+import { GameService } from "@/services/game.service";
 
 export class TicTacToeService extends GameService<ticTacToeModel> {
   constructor(model: ticTacToeModel) {

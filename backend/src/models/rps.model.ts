@@ -1,6 +1,6 @@
-import { pool } from "../config/db";
-import type { RPSType } from "../utils/rps.logic";
-import { GameModel } from "./game.model";
+import { pool } from "@/config/db";
+import type { RPSType } from "@/utils/rps.logic";
+import { GameModel } from "@/models/game.model";
 
 export class RPSModel extends GameModel {
   async createGame(gameData: { best_of_N: number }, userId: number) {
@@ -14,10 +14,7 @@ export class RPSModel extends GameModel {
   }
 
   async getGameData(gameId: string) {
-    const result = await pool.query(
-      "SELECT * FROM rockpaperscissors WHERE id = $1",
-      [gameId],
-    );
+    const result = await pool.query("SELECT * FROM rockpaperscissors WHERE id = $1", [gameId]);
     return result.rows[0];
   }
 
@@ -44,14 +41,7 @@ export class RPSModel extends GameModel {
       updated_at = NOW()
     WHERE id = $6,
     RETURNING *`,
-      [
-        gameData.current_round,
-        gameData.p1_points,
-        gameData.p2_points,
-        gameData.status,
-        gameData.winner,
-        gameId,
-      ],
+      [gameData.current_round, gameData.p1_points, gameData.p2_points, gameData.status, gameData.winner, gameId],
     );
     return result.rows[0];
   }
@@ -110,11 +100,7 @@ export class RPSModel extends GameModel {
     return result.rows[0];
   }
 
-  async updateChoice(
-    id: string,
-    player: "p1_choice" | "p2_choice",
-    choice: RPSType,
-  ) {
+  async updateChoice(id: string, player: "p1_choice" | "p2_choice", choice: RPSType) {
     const allowedColumns: Record<typeof player, string> = {
       p1_choice: "p1_choice",
       p2_choice: "p2_choice",
