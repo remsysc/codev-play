@@ -7,27 +7,18 @@ import {
     FaRegHandPaper,
     FaRegHandScissors,
 } from "react-icons/fa";
-import { IconType } from "react-icons";
+import { Button } from "@/components/ui/button";
 
-const BADGE: Record<string, { label: string; classes: string }> = {
-    win: {
-        label: "W",
-        classes: "bg-emerald-500/20 text-emerald-400 border-emerald-500/40",
-    },
-    lose: {
-        label: "L",
-        classes: "bg-rose-500/20    text-rose-400    border-rose-500/40",
-    },
-    draw: {
-        label: "D",
-        classes: "bg-amber-500/20   text-amber-400   border-amber-500/40",
-    },
-};
-
-const EMOJI: Record<string, IconType> = {
+const ICONS = {
     rock: FaRegHandRock,
     paper: FaRegHandPaper,
     scissors: FaRegHandScissors,
+};
+
+const BADGE = {
+    win: "bg-emerald-500/15 text-emerald-500 border-emerald-500/40",
+    lose: "bg-rose-500/15 text-rose-500 border-rose-500/40",
+    draw: "bg-amber-500/15 text-amber-500 border-amber-500/40",
 };
 
 type Props = {
@@ -50,134 +41,198 @@ export default function ScoreBoard({
     if (!mode) return null;
 
     const total = score.player + score.opponent;
-    const playerPct =
-        total === 0 ? 50 : Math.round((score.player / total) * 100);
-    const opponentLabel = mode === "online" ? "Opponent" : "CPU";
+    const pct = total === 0 ? 50 : Math.round((score.player / total) * 100);
+    const opponent = mode === "online" ? "Opponent" : "CPU";
 
     return (
-        <div className="flex flex-col items-center gap-5 w-full max-w-md">
-            {/* ── Score tracker ───────────────────────────────────── */}
-            <div className="w-full bg-[#39327C]/60 rounded-2xl p-5 border border-white/10">
-                <div className="flex justify-between items-end mb-3">
-                    <div className="text-center">
-                        <p className="text-[10px] uppercase tracking-widest text-purple-300 mb-1">
-                            You
-                        </p>
-                        <p className="text-5xl font-black text-white leading-none">
-                            {score.player}
-                        </p>
-                        <p className="text-[10px] text-purple-400 mt-1">
-                            / {winsNeeded} to win
-                        </p>
-                    </div>
+        <div className="flex flex-col items-center gap-6 w-full max-w-md">
+            {/* Score Card */}
+            <div className="w-full rounded-2xl border bg-card      dark:bg-[#39327C] text-card-foreground shadow-sm p-5">
+                <ScoreHeader
+                    player={score.player}
+                    opponent={score.opponent}
+                    opponentLabel={opponent}
+                    winsNeeded={winsNeeded}
+                    bestOf={bestOf}
+                    rounds={history.length}
+                />
 
-                    <div className="text-center">
-                        <p className="text-xs text-purple-400 uppercase tracking-widest">
-                            Best of {bestOf}
-                        </p>
-                        <p className="text-[10px] text-purple-500 mt-1">
-                            {history.length} round
-                            {history.length !== 1 ? "s" : ""}
-                        </p>
-                    </div>
-
-                    <div className="text-center">
-                        <p className="text-[10px] uppercase tracking-widest text-purple-300 mb-1">
-                            {opponentLabel}
-                        </p>
-                        <p className="text-5xl font-black text-white leading-none">
-                            {score.opponent}
-                        </p>
-                        <p className="text-[10px] text-purple-400 mt-1">
-                            / {winsNeeded} to win
-                        </p>
-                    </div>
-                </div>
-
-                {/* Win-rate bar */}
-                <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
-                    <div
-                        className="h-full rounded-full bg-linear-to-r from-emerald-500 to-emerald-400 transition-all duration-500"
-                        style={{ width: `${playerPct}%` }}
-                    />
-                </div>
-                <div className="flex justify-between mt-1">
-                    <span className="text-[10px] text-emerald-400">
-                        You {playerPct}%
-                    </span>
-                    <span className="text-[10px] text-rose-400">
-                        {opponentLabel} {100 - playerPct}%
-                    </span>
-                </div>
+                <ProgressBar percent={pct} opponent={opponent} />
             </div>
 
-            {/* ── Round history ───────────────────────────────────── */}
+            {/* History */}
+            {history.length > 0 && <HistoryList history={history} />}
+
+            {/* Reset */}
             {history.length > 0 && (
-                <div className="w-full">
-                    <p className="text-[10px] uppercase tracking-widest text-purple-400 mb-2 text-center">
-                        Round History
-                    </p>
-                    <div className="flex flex-col gap-1.5">
-                        {history.map((round, i) => {
-                            const badge = BADGE[round.result];
-                            return (
-                                <div
-                                    key={round.roundNumber}
-                                    className="flex items-center justify-between bg-white/5 rounded-xl px-4 py-2 border border-white/8"
-                                    style={{
-                                        animation:
-                                            i === 0
-                                                ? "fade-down 0.3s ease-out"
-                                                : undefined,
-                                        opacity: Math.max(0.3, 1 - i * 0.08),
-                                    }}
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <span
-                                            className={`text-[10px] font-bold w-5 h-5 rounded border flex items-center justify-center ${badge.classes}`}
-                                        >
-                                            {badge.label}
-                                        </span>
-                                        <span className="text-sm flex flex-col items-center gap-1">
-                                            {React.createElement(
-                                                EMOJI[round.playerChoice],
-                                            )}{" "}
-                                            <span className="text-white/40 text-xs capitalize">
-                                                {round.playerChoice}
-                                            </span>
-                                        </span>
-                                    </div>
-
-                                    <span className="text-purple-500 text-xs">
-                                        R{round.roundNumber}
-                                    </span>
-
-                                    <span className="text-sm flex flex-col items-center gap-1">
-                                        {React.createElement(
-                                            EMOJI[round.opponentChoice],
-                                        )}
-                                        <span className="text-white/40 text-xs capitalize">
-                                            {round.opponentChoice}
-                                        </span>{" "}
-                                    </span>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-            )}
-
-            {/* ── Reset ───────────────────────────────────────────── */}
-            {history.length > 0 && (
-                <button
-                    onClick={onReset}
-                    className="text-xs text-purple-400 hover:text-purple-200 underline underline-offset-2 transition-colors cursor-pointer"
-                >
+                <Button variant="ghost" size="sm" onClick={onReset}>
                     Reset game
-                </button>
+                </Button>
             )}
-
-            <style>{`@keyframes fade-down { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }`}</style>
         </div>
+    );
+}
+
+/* ================= HEADER ================= */
+
+function ScoreHeader({
+    player,
+    opponent,
+    opponentLabel,
+    winsNeeded,
+    bestOf,
+    rounds,
+}: {
+    player: number;
+    opponent: number;
+    opponentLabel: string;
+    winsNeeded: number;
+    bestOf: number;
+    rounds: number;
+}) {
+    return (
+        <div className="flex justify-between items-end mb-4">
+            <ScoreBlock label="You" score={player} winsNeeded={winsNeeded} />
+
+            <div className="text-center">
+                <p className="text-xs uppercase tracking-widest text-muted-foreground">
+                    Best of {bestOf}
+                </p>
+                <p className="text-[11px] text-muted-foreground mt-1">
+                    {rounds} round{rounds !== 1 && "s"}
+                </p>
+            </div>
+
+            <ScoreBlock
+                label={opponentLabel}
+                score={opponent}
+                winsNeeded={winsNeeded}
+            />
+        </div>
+    );
+}
+
+/* ================= SCORE BLOCK ================= */
+
+function ScoreBlock({
+    label,
+    score,
+    winsNeeded,
+}: {
+    label: string;
+    score: number;
+    winsNeeded: number;
+}) {
+    return (
+        <div className="text-center">
+            <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
+                {label}
+            </p>
+
+            <p className="text-5xl font-black leading-none">{score}</p>
+
+            <p className="text-[10px] text-muted-foreground mt-1">
+                / {winsNeeded} to win
+            </p>
+        </div>
+    );
+}
+
+/* ================= PROGRESS BAR ================= */
+
+function ProgressBar({
+    percent,
+    opponent,
+}: {
+    percent: number;
+    opponent: string;
+}) {
+    return (
+        <>
+            <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
+                <div
+                    className="h-full rounded-full bg-primary transition-all duration-500"
+                    style={{ width: `${percent}%` }}
+                />
+            </div>
+
+            <div className="flex justify-between mt-1 text-[11px]">
+                <span className="text-emerald-500">You {percent}%</span>
+                <span className="text-rose-500">
+                    {opponent} {100 - percent}%
+                </span>
+            </div>
+        </>
+    );
+}
+
+/* ================= HISTORY ================= */
+
+function HistoryList({ history }: { history: Round[] }) {
+    return (
+        <div className="w-full">
+            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2 text-center">
+                Round History
+            </p>
+
+            <div className="flex flex-col gap-2">
+                {history.map((round, i) => {
+                    const IconLeft = ICONS[round.playerChoice];
+                    const IconRight = ICONS[round.opponentChoice];
+
+                    return (
+                        <div
+                            key={round.roundNumber}
+                            className={`flex items-center justify-between rounded-xl border bg-muted/40 px-4 py-2 animate-in fade-in slide-in-from-top-2 duration-300`}
+                            style={{ opacity: Math.max(0.35, 1 - i * 0.08) }}
+                        >
+                            {/* Left */}
+                            <div className="flex items-center gap-3">
+                                <span
+                                    className={`text-[10px] font-bold w-5 h-5 rounded border flex items-center justify-center ${BADGE[round.result]}`}
+                                >
+                                    {round.result[0].toUpperCase()}
+                                </span>
+
+                                <ChoiceIcon
+                                    Icon={IconLeft}
+                                    label={round.playerChoice}
+                                />
+                            </div>
+
+                            {/* Round number */}
+                            <span className="text-xs text-muted-foreground">
+                                R{round.roundNumber}
+                            </span>
+
+                            {/* Right */}
+                            <ChoiceIcon
+                                Icon={IconRight}
+                                label={round.opponentChoice}
+                            />
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+/* ================= ICON ================= */
+
+function ChoiceIcon({
+    Icon,
+    label,
+}: {
+    Icon: React.ComponentType<any>;
+    label: string;
+}) {
+    return (
+        <span className="text-sm flex flex-col items-center gap-1">
+            <Icon className="w-4 h-4" />
+            <span className="text-xs text-muted-foreground capitalize">
+                {label}
+            </span>
+        </span>
     );
 }

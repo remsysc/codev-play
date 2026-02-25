@@ -15,7 +15,7 @@ export default function GameLayout({
             <div className="flex flex-1 flex-col">
                 <Header />
 
-                <main className="flex-1 bg-[#282357]">{children}</main>
+                <main className="flex-1 dark:bg-[#282357]">{children}</main>
 
                 <Footer />
             </div>

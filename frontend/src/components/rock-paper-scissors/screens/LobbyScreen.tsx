@@ -1,7 +1,18 @@
 "use client";
 
-import { useRpsStore } from "@/store/useRpsStore";
 import { useEffect } from "react";
+import { useRpsStore } from "@/store/useRpsStore";
+import { ArrowLeft } from "lucide-react";
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardContent,
+    CardFooter,
+} from "@/components/ui/card";
+
+import { Button } from "@/components/ui/button";
 
 export default function LobbyScreen() {
     const { rooms, getRooms, createRoom, joinRoom, reset } = useRpsStore();
@@ -11,60 +22,79 @@ export default function LobbyScreen() {
     }, [getRooms]);
 
     return (
-        <main className="min-h-screen flex flex-col items-center justify-center gap-8 p-6 bg-[#282357] text-white max-w-2xl mx-auto">
-            <div className="flex items-center gap-3">
-                <h1 className="text-3xl font-bold tracking-tight">
-                    Online Lobby
-                </h1>
-            </div>
-
-            <div className="w-full grid grid-cols-1 gap-4">
-                <button
-                    onClick={() => createRoom()}
-                    className="w-full py-4 px-6 rounded-lg bg-purple-600 hover:bg-purple-700 transition-colors font-semibold"
-                >
-                    ➕ Create Room
-                </button>
-            </div>
-
-            <div className="w-full">
-                <h2 className="text-lg font-semibold mb-4">Available Rooms</h2>
-                <div className="grid grid-cols-1 gap-3">
-                    {rooms.length === 0 ? (
-                        <p className="text-gray-400 text-center py-8">
-                            No rooms available
-                        </p>
-                    ) : (
-                        rooms.map((room) => (
-                            <div
-                                key={room.id}
-                                className="flex items-center justify-between p-4 rounded-lg bg-[#39327C] border border-purple-500/30"
-                            >
-                                <div>
-                                    <p className="font-semibold">{room.id}</p>
-                                    <p className="text-sm text-gray-400">
-                                        {room.players}/2 players
-                                    </p>
-                                </div>
-                                <button
-                                    onClick={() => joinRoom(room.id)}
-                                    disabled={room.players >= 2}
-                                    className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 disabled:bg-gray-700 disabled:cursor-not-allowed transition-colors"
-                                >
-                                    {room.players >= 2 ? "Full" : "Join"}
-                                </button>
-                            </div>
-                        ))
-                    )}
+        <main className="min-h-screen flex items-start justify-center p-6 bg-background">
+            <Card className="w-full max-w-7xl">
+                <div className="p-4 pb-0">
+                    <Button
+                        onClick={reset}
+                        variant="secondary"
+                        className="flex items-center gap-2"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        Back
+                    </Button>
                 </div>
-            </div>
+                <CardHeader className="text-center space-y-2">
+                    <CardTitle className="text-3xl">Online Lobby</CardTitle>
+                    <CardDescription>
+                        Create a room or join an existing match
+                    </CardDescription>
+                    <Button
+                        onClick={createRoom}
+                        size="lg"
+                        className="w-fit font-semibold mx-auto"
+                    >
+                        Create Room
+                    </Button>
+                </CardHeader>
 
-            <button
-                onClick={() => reset()}
-                className="mt-4 px-6 py-2 rounded bg-gray-700 hover:bg-gray-600 transition-colors"
-            >
-                Back
-            </button>
+                <CardContent className="space-y-6">
+                    <section>
+                        <h2 className="text-lg font-semibold mb-4">
+                            Available Rooms
+                        </h2>
+
+                        {rooms.length === 0 ? (
+                            <p className="text-muted-foreground text-center py-8">
+                                No rooms available
+                            </p>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                                {rooms.map((room) => (
+                                    <Card key={room.id}>
+                                        <CardHeader className="pb-2">
+                                            <CardTitle className="text-base">
+                                                Room {room.id}
+                                            </CardTitle>
+                                            <CardDescription>
+                                                {room.players}/2 players
+                                            </CardDescription>
+                                        </CardHeader>
+
+                                        <CardFooter className="flex justify-end">
+                                            <Button
+                                                onClick={() =>
+                                                    joinRoom(room.id)
+                                                }
+                                                disabled={room.players >= 2}
+                                                variant={
+                                                    room.players >= 2
+                                                        ? "secondary"
+                                                        : "default"
+                                                }
+                                            >
+                                                {room.players >= 2
+                                                    ? "Full"
+                                                    : "Join"}
+                                            </Button>
+                                        </CardFooter>
+                                    </Card>
+                                ))}
+                            </div>
+                        )}
+                    </section>
+                </CardContent>
+            </Card>
         </main>
     );
 }
