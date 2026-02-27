@@ -2,7 +2,7 @@ import React from "react";
 import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
 
-export default function DashboardLayout({
+export default function GameLayout({
     children,
 }: {
     children: React.ReactNode;
