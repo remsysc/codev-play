@@ -1,8 +1,9 @@
 import { roomManager, userSocketMap } from "../config/socket-server";
 import { getIO } from "../config/socket-server";
-import { RPSType } from "../utils/rps.logic";
-export class RPSSocket {
-  async RPSPlayerJoined(game: RPSType, userId: number) {
+import { RPSType } from "@/utils/game-logic/rps-logic";
+
+export class TicTacToeSocket {
+  async TicTacToePlayerJoined(game: any, userId: number) {
     const socketId = userSocketMap.get(String(userId));
     console.log(socketId);
 
@@ -15,10 +16,10 @@ export class RPSSocket {
     }
 
     const playerRoomId = playerRoom?.id;
-    getIO().to(playerRoomId).emit("rps:join", game);
+    getIO().to(playerRoomId).emit("tictactoe:join", game);
   }
 
-  async RPSPlayerMoved(game: RPSType, userId: number) {
+  async TicTacToePlayerMoved(game: RPSType, userId: number) {
     const socketId = userSocketMap.get(String(userId));
     const playerRoom = socketId ? roomManager.getPlayerRoom(socketId) : null;
 
@@ -27,6 +28,6 @@ export class RPSSocket {
     }
 
     const playerRoomId = playerRoom?.id;
-    getIO().to(playerRoomId).emit("rps:update", game);
+    getIO().to(playerRoomId).emit("tictactoe:update", game);
   }
 }

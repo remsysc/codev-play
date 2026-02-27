@@ -1,12 +1,8 @@
 import { Request, Response } from "express";
-import { getIO } from "../config/socket-server";
-import { RockPaperScissorsService } from "../services/rpsGame.service";
-import { roomManager, userSocketMap } from "../config/socket-server";
-import { RPSModel } from "../models/rps.model";
-import { RPSType } from "../utils/rps.logic";
+import { RockPaperScissorsService } from "@/services/rps/rps.service";
+import { RPSType } from "@/utils/game-logic/rps-logic";
 import { GameController } from "./game.controller";
 
-const rpsService = new RockPaperScissorsService(new RPSModel());
 type ChoiceBody = { player: string; choice: RPSType };
 
 export class RPSController extends GameController<RockPaperScissorsService> {
@@ -22,11 +18,16 @@ export class RPSController extends GameController<RockPaperScissorsService> {
       const { choice } = req.body;
 
       const userId = req.user?.id ? Number(req.user.id) : null;
+      if (userId === null) {
+        return res.status(400).json({ error: "User not found" });
+      }
+
       const game = await this.service.playMove(
         req.params.gameId,
         userId,
         choice,
       );
+      console.log(game);
       res.json(game);
     } catch (err) {
       const error = err as Error;

@@ -31,7 +31,7 @@ export class RockPaperScissorsService extends GameService<RPSModel> {
     return this.model.setPlayer2AndStart(gameId, userId);
   }
 
-  async playMove(gameId: string, userId: number | null, choice: RPSType) {
+  async playMove(gameId: string, userId: number, choice: RPSType) {
     const game = await this.model.getGameData(gameId);
     if (!game) throw new Error("Game not found");
 
@@ -42,6 +42,8 @@ export class RockPaperScissorsService extends GameService<RPSModel> {
     if (game.player_one != userId && game.player_two != userId) {
       throw new Error("You are not a player in this game");
     }
+
+    console.log("USER ID: ", userId);
 
     if (
       (game.player_one == userId && game.p1_choice != null) ||
@@ -67,9 +69,10 @@ export class RockPaperScissorsService extends GameService<RPSModel> {
       if (roundWinner === 1) p1Points++;
       if (roundWinner === 2) p2Points++;
 
-      const hasWinner = checkWinner(p1Points, p2Points, newGame.best_of_N);
+      const hasWinner = checkWinner(p1Points, p2Points, newGame.best_of_n);
+      console.log("HAS WINNER: ", hasWinner);
       const currentRound =
-        hasWinner === 0 ? newGame.current_round : newGame.current_Round + 1;
+        hasWinner === 0 ? newGame.current_round + 1 : newGame.current_Round;
 
       const gameDataPayload = {
         current_round: currentRound,
