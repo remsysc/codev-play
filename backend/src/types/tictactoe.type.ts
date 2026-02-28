@@ -1,4 +1,4 @@
-import { Board } from "@/utils/game-logic/tictactoe-logic";
+import { Board } from "@/services/tictactoe/tictactoe-logic";
 
 export type tttCreate = {
   board: Board;

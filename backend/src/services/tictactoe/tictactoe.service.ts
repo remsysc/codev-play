@@ -1,4 +1,4 @@
-import { checkWinner, initializedBoard, isDraw, isValidMove } from "@/utils/game-logic/tictactoe-logic";
+import { checkWinner, initializedBoard, isDraw, isValidMove } from "@/services/tictactoe/tictactoe-logic";
 import { ticTacToeModel } from "@/models/tictactoe.model";
 import { GameService } from "@/services/game.service";
 

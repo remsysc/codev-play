@@ -1,7 +1,7 @@
 import { RPSModel } from "@/models/rps.model";
-import { RPSType } from "@/utils/rps.logic";
+import { RPSType } from "@/services/rps/rps-logic";
 import { GameService } from "@/services/game.service";
-import { isValidRPSMove, checkWinner, checkScore } from "@/utils/rps.logic";
+import { isValidRPSMove, checkWinner, checkScore } from "@/services/rps/rps-logic";
 
 export class RockPaperScissorsService extends GameService<RPSModel> {
   constructor(model: RPSModel) {

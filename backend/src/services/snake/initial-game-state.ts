@@ -1,12 +1,12 @@
-import { GameState } from "@/types/snake.type";
+import { SnakeState, GameStatus, Direction } from "@/types/index";
 
-export function initializeGameState(): GameState {
+export function initializeGameState(): SnakeState {
   return {
-    status: "PLAYING",
+    status: GameStatus.PLAYING,
     boardWidth: 20,
     boardHeight: 20,
     snakeBody: [{ x: Math.floor(20 / 2), y: Math.floor(20 / 2) }],
-    direction: "RIGHT",
+    direction: Direction.RIGHT,
     food: { x: 0, y: 0 },
     score: 0,
   };
