@@ -1,11 +1,11 @@
-import { GameState, Directions } from "@/types/snake.type";
+import { SnakeState, Directions } from "@/types/snake.type";
 
-export function wallCollision(gameState: GameState): boolean {
+export function wallCollision(gameState: SnakeState): boolean {
   const head = gameState.snakeBody[0];
   return head.x < 0 || head.x >= gameState.boardWidth || head.y < 0 || head.y >= gameState.boardHeight;
 }
 
-export function selfCollision(gameState: GameState): boolean {
+export function selfCollision(gameState: SnakeState): boolean {
   const head = gameState.snakeBody[0];
   return gameState.snakeBody.slice(1).some((segment) => segment.x === head.x && segment.y === head.y);
 }

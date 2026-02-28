@@ -1,4 +1,5 @@
 export type Position = { x: number; y: number };
+export type Player = 1 | 2 | 0;
 
 export enum GameStatus {
   PLAYING = "PLAYING",

@@ -1,4 +1,5 @@
-import { SnakeState, GameStatus, Direction } from "@/types/index";
+import { SnakeState } from "@/types/snake.type";
+import { GameStatus, Direction } from "@/types/game.type";
 
 export function initializeGameState(): SnakeState {
   return {

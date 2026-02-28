@@ -1,4 +1,5 @@
-import { RPSChoice, RPSType, Player } from "@/types/rps.types";
+import { RPSChoice, RPSType } from "@/types/rps.types";
+import { Player } from "@/types/game.type";
 
 export const isValidRPSMove = (choice: string): boolean => {
   return RPSChoice.includes(choice);
