@@ -1,9 +1,4 @@
-import {
-  checkWinner,
-  initializedBoard,
-  isDraw,
-  isValidMove,
-} from "@/utils/game-logic/tictactoe-logic";
+import { checkWinner, initializedBoard, isDraw, isValidMove } from "@/services/tictactoe/tictactoe-logic";
 import { ticTacToeModel } from "@/models/tictactoe.model";
 import { TicTacToeSocket } from "@/sockets/tictactoe.socket";
 import { GameService } from "@/services/game.service";
@@ -40,9 +35,7 @@ export class TicTacToeService extends GameService<ticTacToeModel> {
     }
 
     if (!game.player_x) {
-      throw new Error(
-        "Game has no host (player_x). Create game should set player_x.",
-      );
+      throw new Error("Game has no host (player_x). Create game should set player_x.");
     }
 
     await this.socket.TicTacToePlayerJoined(game, userId);
@@ -71,10 +64,7 @@ export class TicTacToeService extends GameService<ticTacToeModel> {
     if (!isX && !isO) throw new Error("You are not a player in this game");
 
     // must be your turn
-    if (
-      (game.current_player === "X" && !isX) ||
-      (game.current_player === "O" && !isO)
-    ) {
+    if ((game.current_player === "X" && !isX) || (game.current_player === "O" && !isO)) {
       throw new Error("Not your turn");
     }
 

@@ -15,6 +15,9 @@ export type RPSGame = {
   updated_at: Date;
 };
 
+export const RPSChoice = ["R", "P", "S"];
+export type RPSType = "R" | "P" | "S";
+
 /*id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
     player_one INT,

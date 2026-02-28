@@ -23,5 +23,14 @@ export class GameService<T extends GameModel<any>> {
     return await this.model.getActiveGames();
   }
 
-  async joinGame(gameId: string, userId: number) {}
+  async joinGame(gameId: string, userId: number) {
+    const game = await this.model.getGameData(gameId);
+    if (!game) throw new Error("Game not found");
+
+    return this.processJoinGame(game, userId);
+  }
+
+  protected processJoinGame(game: any, userId: number): Promise<any> {
+    throw new Error("processJoinGame must be implemented by game-specific service");
+  }
 }
