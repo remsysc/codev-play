@@ -1,43 +1,33 @@
 import { Request, Response } from "express";
-import { TicTacToeService } from "@/services/tictactoe/tictactoe.service";
-import { ticTacToeModel } from "@/models/tictactoe.model";
-import { TicTacToeSocket } from "@/sockets/tictactoe.socket";
+import { RockPaperScissorsService } from "@/services/rps/rps.service";
+import { RPSType } from "@/utils/game-logic/rps-logic";
 import { GameController } from "./game.controller";
 
-const tttService = new TicTacToeService(
-  new ticTacToeModel(),
-  new TicTacToeSocket(),
-);
-type MoveBody = { row: number; col: number };
+type ChoiceBody = { player: string; choice: RPSType };
 
-export class TicTacToeController extends GameController<TicTacToeService> {
-  constructor(service: TicTacToeService) {
+export class RPSController extends GameController<RockPaperScissorsService> {
+  constructor(service: RockPaperScissorsService) {
     super(service);
   }
 
   async makeMoveController(
-    req: Request<{ gameId: string }, unknown, MoveBody>,
+    req: Request<{ gameId: string }, any, ChoiceBody>,
     res: Response,
-  ): Promise<void> {
+  ) {
     try {
-      const { row, col } = req.body;
-      if (typeof row !== "number" || typeof col !== "number") {
-        res.status(400).json({ error: "row and col must be numbers" });
-        return;
-      }
+      const { choice } = req.body;
 
       const userId = req.user?.id ? Number(req.user.id) : null;
       if (userId === null) {
-        res.status(400).json({ error: "User not found" });
-        return;
+        return res.status(400).json({ error: "User not found" });
       }
 
-      const game = await tttService.playMove(
+      const game = await this.service.playMove(
         req.params.gameId,
         userId,
-        row,
-        col,
+        choice,
       );
+      console.log(game);
       res.json(game);
     } catch (err) {
       const error = err as Error;
@@ -46,10 +36,18 @@ export class TicTacToeController extends GameController<TicTacToeService> {
   }
 }
 
-/*export const createGameController = async (req: Request, res: Response): Promise<void> => {
+/*export const createGameController = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
-    const Id = req.user?.id ? Number(req.user.id) : null;
-    const game = await tttService.startGame(Id);
+    const Id = Number(req.user.id);
+    if (Id == null) {
+      throw new Error("User ID cannot be null.");
+    }
+
+    const gameData = req.body.gameData;
+    const game = await rpsService.startGame(gameData, Id);
 
     res.status(201).json(game);
   } catch (err) {
@@ -63,10 +61,10 @@ export class TicTacToeController extends GameController<TicTacToeService> {
 
 export const joinGameController = async (req: Request, res: Response) => {
   try {
-    const userId = req.user?.id;
-    const gameId = String(req.params?.gameId);
+    const userId = req.user!.id;
+    const gameId = String(req.params!.gameId);
 
-    const game = await tttService.joinGame(gameId, userId);
+    const game = await rpsService.joinGame(gameId, userId);
     console.log(game);
 
     const socketId = userSocketMap.get(String(userId));
@@ -81,7 +79,7 @@ export const joinGameController = async (req: Request, res: Response) => {
     }
 
     const playerRoomId = playerRoom?.id;
-    getIO().to(playerRoomId).emit("tictactoe:join", game);
+    getIO().to(playerRoomId).emit("rps:join", game);
 
     res.json(game);
   } catch (err) {
@@ -90,9 +88,12 @@ export const joinGameController = async (req: Request, res: Response) => {
   }
 };
 
-export const getGameController = async (req: Request<{ gameId: string }>, res: Response): Promise<void> => {
+export const getGameController = async (
+  req: Request<{ gameId: string }>,
+  res: Response,
+): Promise<void> => {
   try {
-    const game = await tttService.fetchGame(req.params.gameId);
+    const game = await rpsService.fetchGame(req.params.gameId);
     res.json(game);
   } catch (err) {
     const error = err as Error;
@@ -100,20 +101,16 @@ export const getGameController = async (req: Request<{ gameId: string }>, res: R
   }
 };
 
-type MoveBody = { row: number; col: number };
-
+type ChoiceBody = { player: string; choice: RPSType };
 export const makeMoveController = async (
-  req: Request<{ gameId: string }, unknown, MoveBody>,
+  req: Request<{ gameId: string }, any, ChoiceBody>,
   res: Response,
 ): Promise<void> => {
   try {
-    const { row, col } = req.body;
-    if (typeof row !== "number" || typeof col !== "number") {
-      res.status(400).json({ error: "row and col must be numbers" });
-      return;
-    }
+    const { choice } = req.body;
+
     const userId = req.user?.id ? Number(req.user.id) : null;
-    const game = await tttService.playMove(req.params.gameId, userId, row, col);
+    const game = await rpsService.playMove(req.params.gameId, userId, choice);
 
     const socketId = userSocketMap.get(String(userId));
     const playerRoom = socketId ? roomManager.getPlayerRoom(socketId) : null;
@@ -124,7 +121,7 @@ export const makeMoveController = async (
     }
 
     const playerRoomId = playerRoom?.id;
-    getIO().to(playerRoomId).emit("tictactoe:update", game);
+    getIO().to(playerRoomId).emit("rps:update", game);
 
     res.json(game);
   } catch (err) {
@@ -133,16 +130,18 @@ export const makeMoveController = async (
   }
 };
 
-export const resetGameController = async (req: Request<{ gameId: string }>, res: Response): Promise<void> => {
+export const resetGameController = async (
+  req: Request<{ gameId: string }>,
+  res: Response,
+): Promise<void> => {
   try {
-    const game = await tttService.resetExistingGame(req.params.gameId);
+    const game = await rpsService.resetExistingGame(req.params.gameId);
 
     const userId = String(game.player_x);
     const socketId = userSocketMap.get(userId);
-
     const room = socketId ? roomManager.getPlayerRoom(socketId) : null;
     if (room) {
-      getIO().to(room.id).emit("tictactoe:reset", game);
+      getIO().to(room.id).emit("rps:reset", game);
     } else {
       res.status(404).json({ error: "User has not joined a room!" });
       return;
@@ -155,9 +154,12 @@ export const resetGameController = async (req: Request<{ gameId: string }>, res:
   }
 };
 
-export const listActiveGamesController = async (req: Request, res: Response): Promise<void> => {
+export const listActiveGamesController = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
-    const games = await tttService.listActiveGames();
+    const games = await rpsService.listActiveGames();
     res.json(games);
   } catch (err) {
     const error = err as Error;

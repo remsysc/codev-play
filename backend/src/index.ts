@@ -4,6 +4,7 @@ import UserRoutes from "@/routes/auth.route";
 import snakeRoutes from "@/routes/snake.route";
 import ticTacToeRoutes from "@/routes/tictactoe.route";
 
+import RPSRoutes from "./routes/rps.route";
 // Utils
 import cors from "cors";
 import dotenv from "dotenv";
@@ -49,9 +50,15 @@ app.get("/api", (_req: Request, res: Response) => {
 app.use("/api/auth", UserRoutes);
 app.use("/api/snake", snakeRoutes);
 app.use("/api/tictactoe", ticTacToeRoutes);
+app.use("/api/rps", RPSRoutes);
 
 app.post("/logout", (req: Request, res: Response) => {
-  res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "strict", path: "/" });
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    path: "/",
+  });
   res.json({ msg: "Logged out successfully" });
 });
 

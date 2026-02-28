@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { TicTacToeController } from "@/controllers/tictactoe.controller";
-import { TicTacToeService } from "@/services/tictactoe/tictactoe.service";
-import { ticTacToeModel } from "@/models/tictactoe.model";
-import { TicTacToeSocket } from "@/sockets/tictactoe.socket";
-import { auth } from "@/middleware/auth.middleware";
+import { RockPaperScissorsService } from "@/services/rps/rps.service";
+import { RPSController } from "../controllers/rps.controller";
+import { RPSModel } from "@/models/rps.model";
+import { RPSSocket } from "@/sockets/rps.socket";
+import { auth } from "../middleware/auth.middleware";
 
 const router = Router();
-const controller = new TicTacToeController(
-  new TicTacToeService(new ticTacToeModel(), new TicTacToeSocket()),
+const controller = new RPSController(
+  new RockPaperScissorsService(new RPSModel(), new RPSSocket()),
 );
 
 //without auth and multiplayer
@@ -21,6 +21,7 @@ const controller = new TicTacToeController(
  * uncomment this if you want to try
  * with auth and multiplayer
  */
+
 router.post("/create", auth, controller.createGameController.bind(controller));
 router.get(
   "/active",

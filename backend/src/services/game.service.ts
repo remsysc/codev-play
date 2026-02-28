@@ -22,4 +22,6 @@ export class GameService<T extends GameModel<any>> {
   async listActiveGames() {
     return await this.model.getActiveGames();
   }
+
+  async joinGame(gameId: string, userId: number) {}
 }
