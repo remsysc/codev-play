@@ -136,7 +136,7 @@ This document contains step-by-step tasks for implementing the frontend UI for C
 
 ### TASK-F303: Rock Paper Scissors Multiplayer
 
-- [ ] Create matchmaking interface
+- [x] Create matchmaking interface
 - [x] Add waiting room
 - [ ] Handle simultaneous choice reveal
 - [ ] Show opponent status
