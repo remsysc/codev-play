@@ -1,6 +1,6 @@
 "use client";
 
-import { useRpsStore } from "@/store/useRpsStore";
+import { useRpsStore } from "@/store/rps/useRpsStore";
 import ChoiceSection from "@/components/rock-paper-scissors/game/ChoiceSection";
 import ResultDisplay from "@/components/rock-paper-scissors/game/ResultDisplay";
 import ScoreBoard from "@/components/rock-paper-scissors/game/ScoreBoard";

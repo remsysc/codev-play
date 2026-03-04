@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRpsStore } from "@/store/useRpsStore";
+import { useEffect, useState } from "react";
+import { useRpsStore } from "@/store/rps/useRpsStore";
+import { useSocketContext } from "@/context/SocketContext";
 import { ArrowLeft } from "lucide-react";
 import {
     Card,
@@ -11,15 +12,21 @@ import {
     CardContent,
     CardFooter,
 } from "@/components/ui/card";
-
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function LobbyScreen() {
-    const { rooms, getRooms, createRoom, joinRoom, reset } = useRpsStore();
+    const [roomName, setRoomName] = useState("");
+    const { rooms, getRooms, createRoom, joinRoom, reset, setSocket } =
+        useRpsStore();
+    const { socket, isConnected } = useSocketContext();
 
     useEffect(() => {
-        getRooms();
-    }, [getRooms]);
+        if (socket && isConnected) {
+            setSocket(socket);
+            getRooms();
+        }
+    }, [socket, isConnected, setSocket, getRooms]);
 
     return (
         <main className="min-h-screen flex items-start justify-center p-6 bg-background">
@@ -39,13 +46,25 @@ export default function LobbyScreen() {
                     <CardDescription>
                         Create a room or join an existing match
                     </CardDescription>
-                    <Button
-                        onClick={createRoom}
-                        size="lg"
-                        className="w-fit font-semibold mx-auto"
-                    >
-                        Create Room
-                    </Button>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <Input
+                            placeholder="Enter room name..."
+                            value={roomName}
+                            onChange={(e) => setRoomName(e.target.value)}
+                            className="w-64"
+                        />
+
+                        <Button
+                            onClick={() => {
+                                createRoom(roomName);
+                                setRoomName("");
+                            }}
+                            size="lg"
+                            disabled={!roomName.trim()}
+                        >
+                            Create Room
+                        </Button>
+                    </div>
                 </CardHeader>
 
                 <CardContent className="space-y-6">
@@ -64,7 +83,7 @@ export default function LobbyScreen() {
                                     <Card key={room.id}>
                                         <CardHeader className="pb-2">
                                             <CardTitle className="text-base">
-                                                Room {room.id}
+                                                Room {room.name}
                                             </CardTitle>
                                             <CardDescription>
                                                 {room.players}/2 players
