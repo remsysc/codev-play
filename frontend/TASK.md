@@ -178,7 +178,7 @@ This document contains step-by-step tasks for implementing the frontend UI for C
 - [ ] Create chessboard component
 - [ ] Design chess pieces
 - [ ] Add piece drag-and-drop
-- [ ] Highlight legal moves
+- [x] Highlight legal moves
 - [ ] Add move notation display
 - [ ] Create captured pieces display
 
