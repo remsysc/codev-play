@@ -184,18 +184,18 @@ This document contains step-by-step tasks for implementing the frontend UI for C
 
 ### TASK-F502: Chess Game Page
 
-- [ ] Create game page route
-- [ ] Implement board interaction
-- [ ] Add move validation feedback
-- [ ] Display check/checkmate alerts
-- [ ] Show move history panel
-- [ ] Add game clock/timer
-- [ ] Implement draw offer UI
+- [x] Create game page route
+- [x] Implement board interaction
+- [x] Add move validation feedback
+- [x] Display check/checkmate alerts
+- [x] Show move history panel
+- [x] Add game clock/timer
+- [x] Implement draw offer UI
 
 ### TASK-F503: Chess Multiplayer
 
-- [ ] Create game lobby
-- [ ] Add player matching
+- [x] Create game lobby
+- [x] Add player matching
 - [ ] Handle real-time moves
 - [ ] Add spectator mode
 - [ ] Show opponent's time
