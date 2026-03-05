@@ -31,6 +31,10 @@ export default function GameScreen() {
     const isGameOver = status === "checkmate" || status === "stalemate" || status === "draw" || status === "resigned";
     const isBoardDisabled = isGameOver;
 
+    //onst isBoardDisabled = playerColor !== null
+    //? activeColor !== orientation || status !== "playing"
+    //: status !== "playing";
+
     return (
         <div className="flex flex-col lg:flex-row items-start justify-center gap-4 p-4 lg:p-8 min-h-[calc(100vh-4rem)]">
 
