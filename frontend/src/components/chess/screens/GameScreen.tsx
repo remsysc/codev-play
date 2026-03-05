@@ -31,7 +31,7 @@ export default function GameScreen() {
     const isGameOver = status === "checkmate" || status === "stalemate" || status === "draw" || status === "resigned";
     const isBoardDisabled = isGameOver;
 
-    //onst isBoardDisabled = playerColor !== null
+    //const isBoardDisabled = playerColor !== null
     //? activeColor !== orientation || status !== "playing"
     //: status !== "playing";
 
