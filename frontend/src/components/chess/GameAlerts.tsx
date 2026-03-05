@@ -92,7 +92,7 @@ export default function GameAlerts({ status, activeColor }: Props) {
     return (
         <Alert
             variant={config.variant}
-            className="w-full max-w-[448px] font-roboto animate-in fade-in slide-in-from-top-2 duration-200"
+            className="w-full max-w-md font-roboto animate-in fade-in slide-in-from-top-2 duration-200"
         >
             <AlertTitle className="font-outfit text-sm">{config.title}</AlertTitle>
             <AlertDescription className="text-xs">{config.description}</AlertDescription>
