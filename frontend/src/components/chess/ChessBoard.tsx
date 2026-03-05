@@ -179,7 +179,7 @@ export default function ChessBoard({
                 {files.map((f) => (
                     <span
                         key={f}
-                        className="w-14 lg:w-16 xl:w-[4.5rem] text-center font-mono text-[10px] text-muted-foreground uppercase tracking-widest"
+                        className="w-14 lg:w-16 xl:w-18 text-center font-mono text-[10px] text-muted-foreground uppercase tracking-widest"
                         aria-hidden="true"
                     >
                         {f}
@@ -193,7 +193,7 @@ export default function ChessBoard({
                     {ranks.map((r) => (
                         <span
                             key={r}
-                            className="h-14 lg:h-16 xl:h-[4.5rem] flex items-center justify-center font-mono text-[10px] text-muted-foreground"
+                            className="h-14 lg:h-16 xl:h-18 flex items-center justify-center font-mono text-[10px] text-muted-foreground"
                             aria-hidden="true"
                         >
                             {r}
@@ -231,7 +231,7 @@ export default function ChessBoard({
                                     disabled={disabled}
                                     onClick={() => handleSquareClick(square)}
                                     className={cn(
-                                        "w-14 h-14 lg:w-16 lg:h-16 xl:w-[4.5rem] xl:h-[4.5rem] relative flex items-center justify-center transition-[filter,box-shadow] duration-75",
+                                        "w-14 h-14 lg:w-16 lg:h-16 xl:w-18 xl:h-18 relative flex items-center justify-center transition-[filter,box-shadow] duration-75",
                                         isLight ? "bg-[#aaaaaa]" : "bg-[#1a1a1a]",
                                         isSelected && "brightness-150 shadow-[inset_0_0_0_3px_rgba(255,255,255,0.4)]",
                                         !disabled && !isSelected && "hover:brightness-125",
@@ -278,7 +278,7 @@ export default function ChessBoard({
                     {ranks.map((r) => (
                         <span
                             key={r}
-                            className="h-14 lg:h-16 xl:h-[4.5rem] flex items-center justify-center font-mono text-[10px] text-muted-foreground"
+                            className="h-14 lg:h-16 xl:h-18 flex items-center justify-center font-mono text-[10px] text-muted-foreground"
                             aria-hidden="true"
                         >
                             {r}
@@ -292,7 +292,7 @@ export default function ChessBoard({
                 {files.map((f) => (
                     <span
                         key={f}
-                        className="w-14 lg:w-16 xl:w-[4.5rem] text-center font-mono text-[10px] text-muted-foreground uppercase tracking-widest"
+                        className="w-14 lg:w-16 xl:w-18 text-center font-mono text-[10px] text-muted-foreground uppercase tracking-widest"
                         aria-hidden="true"
                     >
                         {f}
