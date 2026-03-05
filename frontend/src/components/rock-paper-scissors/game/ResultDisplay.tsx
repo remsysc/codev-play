@@ -7,12 +7,7 @@ import {
 } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
-import {
-    Choice,
-    GamePhase,
-    Round,
-    RoundResult,
-} from "@/types/rock-paper-scissor";
+import { Choice, GamePhase, Round, RoundResult } from "@/types/rps";
 
 const ICONS: Record<Choice, React.ReactNode> = {
     rock: <FaRegHandRock className="w-12 h-12" />,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRpsStore } from "@/store/useRpsStore";
+import { useRpsStore } from "@/store/rps/useRpsStore";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Bot, Globe } from "lucide-react";

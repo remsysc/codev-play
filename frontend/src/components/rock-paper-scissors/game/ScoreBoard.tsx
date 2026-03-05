@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Round, Score, GameMode } from "@/types/rock-paper-scissor";
+import { Round, Score, GameMode } from "@/types/rps";
 import {
     FaRegHandRock,
     FaRegHandPaper,

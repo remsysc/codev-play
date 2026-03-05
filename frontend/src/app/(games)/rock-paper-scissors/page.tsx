@@ -1,6 +1,6 @@
 "use client";
 
-import { useRpsStore } from "@/store/useRpsStore";
+import { useRpsStore } from "@/store/rps/useRpsStore";
 import IdleScreen from "@/components/rock-paper-scissors/screens/IdleScreen";
 import LobbyScreen from "@/components/rock-paper-scissors/screens/LobbyScreen";
 import RoomScreen from "@/components/rock-paper-scissors/screens/RoomScreen";

@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 
 import ChoiceButton from "./ChoiceButton";
-import { Choice, GamePhase } from "@/types/rock-paper-scissor";
+import { Choice, GamePhase } from "@/types/rps";
 
 const CHOICES: { id: Choice; icon: React.ReactNode; label: string }[] = [
     {
