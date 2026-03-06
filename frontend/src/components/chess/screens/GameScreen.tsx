@@ -31,6 +31,8 @@ export default function GameScreen() {
     const isGameOver = status === "checkmate" || status === "stalemate" || status === "draw" || status === "resigned";
     const isBoardDisabled = isGameOver;
 
+    // TODO: remove const isBoardDisabled = isGameOver; and replace the commented code below for player pieces constraints
+
     //const isBoardDisabled = playerColor !== null
     //? activeColor !== orientation || status !== "playing"
     //: status !== "playing";
