@@ -25,7 +25,7 @@ interface Props {
 const FILES = ["a", "b", "c", "d", "e", "f", "g", "h"] as const;
 const RANKS = [8, 7, 6, 5, 4, 3, 2, 1] as const;
 
-// TODO: Change/remove glyphs according to F501 Task to design pieces
+// Glyphs are temporary
 
 const T = "\uFE0E";
 const PIECE_GLYPHS: Record<string, string> = {
