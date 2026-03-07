@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { Chess } from "chess.js";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Types
 
 export type ChessPhase = "idle" | "lobby" | "room" | "game";
 export type Color = "w" | "b";
@@ -56,7 +56,7 @@ interface ChessState {
     reset: () => void;
 }
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+// Constants
 
 const INITIAL_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
@@ -73,11 +73,11 @@ const initialState = {
     clocks: { w: 600, b: 600 },
 };
 
-// ─── Chess engine (outside store so it persists across renders) ───────────────
+// Chess engine (outside store)
 
 const chessEngine = new Chess();
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers
 
 function deriveStatus(engine: Chess): GameStatus {
     console.log("deriveStatus:", {
@@ -93,7 +93,7 @@ function deriveStatus(engine: Chess): GameStatus {
     return "playing";
 }
 
-// ─── Store ────────────────────────────────────────────────────────────────────
+// Store
 
 export const useChessStore = create<ChessState>((set, get) => ({
     ...initialState,
