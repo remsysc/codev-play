@@ -11,7 +11,7 @@ import {
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Types
 
 interface Props {
     /**
@@ -23,7 +23,7 @@ interface Props {
     onDecline: () => void;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// Component
 
 /**
  * DrawOfferModal

@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { MoveEntry } from "@/store/chess/useChessStore";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Types
 
 interface Props {
     moves: MoveEntry[];
@@ -17,7 +17,7 @@ interface MovePair {
     black: string | null;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers
 
 function pairMoves(moves: MoveEntry[]): MovePair[] {
     const pairs: MovePair[] = [];
@@ -31,7 +31,7 @@ function pairMoves(moves: MoveEntry[]): MovePair[] {
     return pairs;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// Component
 
 export default function MoveHistory({ moves }: Props) {
     const bottomRef = useRef<HTMLDivElement>(null);

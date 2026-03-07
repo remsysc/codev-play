@@ -5,7 +5,7 @@ import { Chess } from "chess.js";
 import type { ValidationResult, GameStatus } from "@/store/chess/useChessStore";
 import { cn } from "@/lib/utils";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Types
 
 type Square = string;
 type Color = "w" | "b";
@@ -20,10 +20,12 @@ interface Props {
     disabled?: boolean;
 }
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+// Constants
 
 const FILES = ["a", "b", "c", "d", "e", "f", "g", "h"] as const;
 const RANKS = [8, 7, 6, 5, 4, 3, 2, 1] as const;
+
+// TODO: Change/remove glyphs according to F501 Task to design pieces
 
 const T = "\uFE0E";
 const PIECE_GLYPHS: Record<string, string> = {
@@ -31,7 +33,7 @@ const PIECE_GLYPHS: Record<string, string> = {
     k: `♚${T}`, q: `♛${T}`, r: `♜${T}`, b: `♝${T}`, n: `♞${T}`, p: `♟${T}`,
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers
 
 function parseFen(fen: string): Record<Square, string> {
     const pieces: Record<Square, string> = {};
@@ -50,7 +52,7 @@ function parseFen(fen: string): Record<Square, string> {
     return pieces;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// Component
 
 export default function ChessBoard({
     position,

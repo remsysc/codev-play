@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import type { GameStatus, Color } from "@/store/chess/useChessStore";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Types
 
 interface Props {
     status: GameStatus;
@@ -18,7 +18,7 @@ interface AlertConfig {
     transient: boolean; // auto-dismiss after 3 s if true
 }
 
-// ─── Alert map ────────────────────────────────────────────────────────────────
+// Alert Map
 
 function resolveAlert(status: GameStatus, activeColor: Color): AlertConfig | null {
     const side = activeColor === "w" ? "White" : "Black";
@@ -64,7 +64,7 @@ function resolveAlert(status: GameStatus, activeColor: Color): AlertConfig | nul
     }
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// Component
 
 export default function GameAlerts({ status, activeColor }: Props) {
     const [dismissed, setDismissed] = useState(false);

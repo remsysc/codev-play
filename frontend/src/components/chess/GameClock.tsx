@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Types
 
 interface Props {
     timeLeft: number;       // seconds remaining
@@ -12,7 +12,7 @@ interface Props {
     onExpire?: () => void;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers
 
 function formatTime(seconds: number): string {
     const s = Math.max(0, Math.floor(seconds));
@@ -21,7 +21,7 @@ function formatTime(seconds: number): string {
     return `${String(m).padStart(2, "0")}:${String(ss).padStart(2, "0")}`;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// Component
 
 export default function GameClock({ timeLeft, isActive, onTick, onExpire }: Props) {
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -84,7 +84,7 @@ export default function GameClock({ timeLeft, isActive, onTick, onExpire }: Prop
                 {formatTime(timeLeft)}
             </span>
 
-            {/* Invisible spacer to center the time */}
+            {/* Center Time */}
             <span className="w-1.5" aria-hidden="true" />
         </div>
     );
