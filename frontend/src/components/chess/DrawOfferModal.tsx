@@ -1,8 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 // Types
 
@@ -18,66 +25,57 @@ interface Props {
 
 // Component
 
+/**
+ * DrawOfferModal
+ *
+ * Uses shadcn's AlertDialog — consistent with the rest of the app, inherits
+ * theme tokens, focus trap, and Escape-to-close for free.
+ */
 export default function DrawOfferModal({
     isRecipient = true,
     onAccept,
     onDecline,
 }: Props) {
-    const dialogRef = useRef<HTMLDivElement>(null);
-
-    // Trap focus inside modal and close on Escape
-    useEffect(() => {
-        const handleKey = (e: KeyboardEvent) => {
-            if (e.key === "Escape") onDecline();
-        };
-        window.addEventListener("keydown", handleKey);
-        dialogRef.current?.focus();
-        return () => window.removeEventListener("keydown", handleKey);
-    }, [onDecline]);
-
     return (
-        // Backdrop
-        <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-            role="presentation"
-            onClick={(e) => { if (e.target === e.currentTarget) onDecline(); }}
-        >
-            {/* Dialog */}
-            <div
-                ref={dialogRef}
-                role="alertdialog"
-                aria-modal="true"
-                aria-labelledby="draw-title"
-                aria-describedby="draw-desc"
-                tabIndex={-1}
-                className="w-full max-w-sm mx-4 rounded-lg border border-border bg-card p-6 shadow-xl outline-none"
-            >
-                <h2 id="draw-title" className="font-outfit text-lg font-semibold mb-1">
-                    {isRecipient ? "Draw Offered" : "Draw Offer Sent"}
-                </h2>
-                <p id="draw-desc" className="font-roboto text-sm text-muted-foreground mb-6">
-                    {isRecipient
-                        ? "Your opponent has offered a draw. Do you want to accept?"
-                        : "Waiting for your opponent to respond to your draw offer."}
-                </p>
+        <AlertDialog open>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle className="font-outfit">
+                        {isRecipient ? "Draw Offered" : "Draw Offer Sent"}
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="font-roboto">
+                        {isRecipient
+                            ? "Your opponent has offered a draw. Do you want to accept?"
+                            : "Waiting for your opponent to respond to your draw offer."}
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
 
-                <div className="flex justify-end gap-2">
+                <AlertDialogFooter>
                     {isRecipient ? (
                         <>
-                            <Button variant="outline" className="font-roboto" onClick={onDecline}>
+                            <AlertDialogCancel
+                                onClick={onDecline}
+                                className="font-roboto"
+                            >
                                 Decline
-                            </Button>
-                            <Button className="font-roboto" onClick={onAccept}>
+                            </AlertDialogCancel>
+                            <AlertDialogAction
+                                onClick={onAccept}
+                                className="font-roboto"
+                            >
                                 Accept Draw
-                            </Button>
+                            </AlertDialogAction>
                         </>
                     ) : (
-                        <Button variant="outline" className="font-roboto" onClick={onDecline}>
+                        <AlertDialogCancel
+                            onClick={onDecline}
+                            className="font-roboto"
+                        >
                             Cancel Offer
-                        </Button>
+                        </AlertDialogCancel>
                     )}
-                </div>
-            </div>
-        </div>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     );
 }
