@@ -194,8 +194,8 @@ This document contains step-by-step tasks for implementing the frontend UI for C
 
 ### TASK-F503: Chess Multiplayer
 
-- [x] Create game lobby
-- [x] Add player matching
+- [ ] Create game lobby
+- [ ] Add player matching
 - [ ] Handle real-time moves
 - [ ] Add spectator mode
 - [ ] Show opponent's time
