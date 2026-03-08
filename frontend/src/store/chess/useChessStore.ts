@@ -94,7 +94,8 @@ function deriveStatus(engine: Chess): GameStatus {
 }
 
 // Store
-
+// TODO: [F503 - Handle real-time moves] Add socket: Socket | null and setSocket() here
+// setSocket() registers all chess:* socket events (see F503 PR10)
 export const useChessStore = create<ChessState>((set, get) => ({
     ...initialState,
 
@@ -150,7 +151,7 @@ export const useChessStore = create<ChessState>((set, get) => ({
     },
 
     setValidation: (result) => set({ lastValidation: result }),
-
+    // TODO: [F503 - Handle real-time moves] Called when opponent's move arrives via socket.on("chess:moveMade"
     applyServerMove: (fen, san, color, status) => {
         chessEngine.load(fen);
         set((state) => ({

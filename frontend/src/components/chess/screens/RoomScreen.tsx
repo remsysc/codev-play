@@ -7,7 +7,7 @@ export default function RoomScreen() {
     const { currentRoom, leaveRoom, startGame } = useChessStore();
 
     // TODO: listen for socket event "chess:gameStart" → startGame(color, timeControl)
-
+    // Remove [Dev] Start as White button when socket is wired
     return (
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] gap-6 p-8">
             <div className="text-center space-y-2">

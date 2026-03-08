@@ -28,7 +28,7 @@ interface Props {
 /**
  * DrawOfferModal
  *
- * Uses shadcn's AlertDialog — consistent with the rest of the app, inherits
+ * Uses shadcn's AlertDialog
  * theme tokens, focus trap, and Escape-to-close for free.
  */
 export default function DrawOfferModal({

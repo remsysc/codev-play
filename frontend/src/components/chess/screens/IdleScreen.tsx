@@ -16,10 +16,15 @@ export default function IdleScreen() {
                 </p>
             </div>
             <div className="flex gap-3">
+
+                {/* TODO: [F503 - Create game lobby] emit("chess:getRooms") via socket before navigating */}
                 <Button onClick={() => setPhase("lobby")}>Find a Game</Button>
+
+                {/* TODO: [F503 - Create game lobby] emit("chess:createRoom", { timeControl: 600 }) via socket */}
                 <Button variant="outline" onClick={() => setPhase("lobby")}>
                     Create Room
                 </Button>
+
             </div>
         </div>
     );

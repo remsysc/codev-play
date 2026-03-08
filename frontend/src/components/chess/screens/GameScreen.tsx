@@ -49,6 +49,7 @@ export default function GameScreen() {
                         <p className="font-roboto text-xs text-muted-foreground">ELO —</p>
                     </div>
                 </div>
+               {/* TODO: [F503 - Show opponent's time] Replace local tickClock with socket.on("chess:clockSync") */}
                 <GameClock
                     timeLeft={clocks[opponentColor]}
                     isActive={activeColor === opponentColor && !isGameOver}
@@ -69,6 +70,7 @@ export default function GameScreen() {
                     orientation={orientation}
                     disabled={isBoardDisabled}
                 />
+                {/* TODO: [F503 - Implement resign/draw] Wire Resign to emit("chess:resign") and Offer Draw to emit("chess:offerDraw") via socket */}
                 <div className="flex gap-2">
                     <Button
                         variant="outline"
