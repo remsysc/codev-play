@@ -1,9 +1,12 @@
 import { pool } from "@/config/db";
-import { Board } from "@/types/index";
+import { Board } from "@/types/tictactoe.type";
 import { GameModel } from "@/models/game.model";
 
 export class ticTacToeModel extends GameModel {
-  async createGame(gameData: { board: Board; currentPlayer: string }, userId: number | null) {
+  async createGame(
+    gameData: { board: Board; currentPlayer: string },
+    userId: number | null,
+  ) {
     const result = await pool.query(
       `INSERT INTO public.tictactoe (board, current_player, status, player_x)
      VALUES ($1::jsonb, $2, 'WAITING', $3)
@@ -14,7 +17,9 @@ export class ticTacToeModel extends GameModel {
   }
 
   async getGameData(gameId: string) {
-    const result = await pool.query("SELECT * FROM tictactoe WHERE id = $1", [gameId]);
+    const result = await pool.query("SELECT * FROM tictactoe WHERE id = $1", [
+      gameId,
+    ]);
     return result.rows[0];
   }
 
@@ -36,7 +41,13 @@ export class ticTacToeModel extends GameModel {
          updated_at = NOW()
      WHERE id = $5
      RETURNING *`,
-      [JSON.stringify(gameData.board), gameData.current_player, gameData.status, gameData.winner, gameId],
+      [
+        JSON.stringify(gameData.board),
+        gameData.current_player,
+        gameData.status,
+        gameData.winner,
+        gameId,
+      ],
     );
     return result.rows[0];
   }

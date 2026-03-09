@@ -7,3 +7,4 @@ logs/
 coverage/
 
 !.env.example
+docker-compose.yaml

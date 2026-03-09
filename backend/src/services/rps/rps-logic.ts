@@ -5,7 +5,11 @@ export const isValidRPSMove = (choice: string): boolean => {
   return RPSChoice.includes(choice);
 };
 
-export const checkWinner = (p1_points: number, p2_points: number, n: number): Player => {
+export const checkWinner = (
+  p1_points: number,
+  p2_points: number,
+  n: number,
+): Player => {
   const targetPoints = Math.floor(n / 2) + 1;
   console.log("TARGET POINTS: ", targetPoints);
   if (p1_points >= targetPoints) {
@@ -28,3 +32,5 @@ export const checkScore = (p1_choice: RPSType, p2_choice: RPSType): number => {
 
   return winCons[p1_choice] == p2_choice ? 1 : 2;
 };
+
+export type { RPSType } from "@/types/rps.types";
