@@ -1,0 +1,23 @@
+info:
+  name: choice p2
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{baseUrl}}/games/rps/{{gameId}}/choice"
+  body:
+    type: json
+    data: |-
+      {
+        "choice" : "P"
+      }
+  auth:
+    type: bearer
+    token: "{{token_player2}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -8,5 +8,5 @@ export function registerRoutes(app: Express) {
   app.use("/api/auth", authRoute);
   app.use("/api/snake", snakeRoute);
   app.use("/api/tictactoe", tictactoeRoute);
-  app.use("/api/rps", rpsRoute);
+  app.use("/api/games/rps", rpsRoute); //fix the route to include "games"
 }

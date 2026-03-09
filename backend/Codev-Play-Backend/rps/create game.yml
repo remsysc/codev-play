@@ -1,0 +1,39 @@
+info:
+  name: create game
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}/games/rps/create"
+  body:
+    type: json
+    data: |-
+      {
+        "gameData" : {
+          "best_of_N" : 3
+        }
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        if (res.getStatus() === 201) {
+                   const body = res.getBody();
+                
+                  if (body.data && body.data.id) {
+                     bru.setEnvVar("gameId", body.data.id);
+                      console.log("✅ Game ID saved: " + body.data.id);
+                  } else if (body.id) {
+                      bru.setEnvVar("gameId", body.id);
+                     console.log("✅ Game ID saved: " + body.id);
+                  }
+              }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

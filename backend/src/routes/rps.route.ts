@@ -6,12 +6,35 @@ import { RPSSocket } from "@/sockets/rps.socket";
 import { auth } from "../middleware/auth.middleware";
 
 const router = Router();
-const controller = new RPSController(new RockPaperScissorsService(new RPSModel()));
+const controller = new RPSController(
+  new RockPaperScissorsService(new RPSModel()),
+);
 
 router.post("/create", auth, controller.createGameController.bind(controller));
-router.get("/active", auth, controller.listActiveGamesController.bind(controller));
+router.get(
+  "/active",
+  auth,
+  controller.listActiveGamesController.bind(controller),
+);
 router.get("/:gameId", auth, controller.getGameController.bind(controller));
-router.post("/:gameId/join", auth, controller.joinGameController.bind(controller));
-router.post("/:gameId/move", auth, controller.makeMoveController.bind(controller));
-router.post("/:gameId/reset", auth, controller.resetGameController.bind(controller));
+router.post(
+  "/:gameId/join",
+  auth,
+  controller.joinGameController.bind(controller),
+);
+router.post(
+  "/:gameId/choice",
+  auth,
+  controller.makeChoiceController.bind(controller),
+);
+router.post(
+  "/:gameId/reset",
+  auth,
+  controller.resetGameController.bind(controller),
+);
+router.get(
+  "/:gameId/history",
+  auth,
+  controller.getHistoryController.bind(controller),
+);
 export default router;

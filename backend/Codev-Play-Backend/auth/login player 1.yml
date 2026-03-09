@@ -1,0 +1,36 @@
+info:
+  name: login player 1
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+             "username": "player1",
+             "password": "Password123"
+            }
+  auth:
+    type: bearer
+    token: "{{token_player1}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        if (res.getStatus() === 201) {
+                  const body = res.getBody();
+                 if (body.data && body.data.token) {
+                     bru.setEnvVar("token_player1", body.data.token);
+                     console.log("✅ Token saved to environment");
+                 }
+             }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

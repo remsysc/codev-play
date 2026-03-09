@@ -22,7 +22,11 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export const registerValidation = (req: Request, res: Response, next: NextFunction) => {
+export const registerValidation = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const email = req.body.email?.trim();
   const username = req.body.username?.trim();
   const password = req.body.password;
@@ -36,11 +40,19 @@ export const registerValidation = (req: Request, res: Response, next: NextFuncti
   }
 
   if (username.length < 3 || username.length > 20) {
-    return ApiResponse.error(res, "Username must be between 3 and 20 characters", 400);
+    return ApiResponse.error(
+      res,
+      "Username must be between 3 and 20 characters",
+      400,
+    );
   }
 
   if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-    return ApiResponse.error(res, "Username can only contain letters, numbers, and underscores", 400);
+    return ApiResponse.error(
+      res,
+      "Username can only contain letters, numbers, and underscores",
+      400,
+    );
   }
 
   if (!/(?=.*[A-Z])(?=.*\d).{8,}/.test(password)) {
@@ -54,7 +66,11 @@ export const registerValidation = (req: Request, res: Response, next: NextFuncti
   next();
 };
 
-export const loginValidation = (req: Request, res: Response, next: NextFunction) => {
+export const loginValidation = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const { username, password } = req.body;
 
   if (!username || !password) {

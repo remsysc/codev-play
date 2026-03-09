@@ -10,7 +10,10 @@ export class RPSController extends GameController<RockPaperScissorsService> {
     super(service);
   }
 
-  async makeMoveController(req: Request<{ gameId: string }, any, ChoiceBody>, res: Response) {
+  async makeChoiceController(
+    req: Request<{ gameId: string }, any, ChoiceBody>,
+    res: Response,
+  ) {
     try {
       const { choice } = req.body;
 
@@ -19,12 +22,30 @@ export class RPSController extends GameController<RockPaperScissorsService> {
         return res.status(400).json({ error: "User not found" });
       }
 
-      const game = await this.service.playMove(req.params.gameId, userId, choice);
+      const game = await this.service.playMove(
+        req.params.gameId,
+        userId,
+        choice,
+      );
       console.log(game);
       res.json(game);
     } catch (err) {
       const error = err as Error;
       res.status(400).json({ error: error.message || "Invalid move" });
+    }
+  }
+
+  async getHistoryController(req: Request<{ gameId: string }>, res: Response) {
+    try {
+      return res.json({
+        history: [],
+        message: "Round History not yet implemented",
+      });
+    } catch (err) {
+      const error = err as Error;
+      res
+        .status(500)
+        .json({ error: error.message || "Failed to fetch history" });
     }
   }
 }

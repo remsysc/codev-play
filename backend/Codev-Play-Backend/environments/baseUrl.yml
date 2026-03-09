@@ -1,0 +1,10 @@
+name: baseUrl
+variables:
+  - name: baseUrl
+    value: http://localhost:5000/api
+  - secret: true
+    name: token_player1
+  - name: gameId
+    value: ""
+  - secret: true
+    name: token_player2

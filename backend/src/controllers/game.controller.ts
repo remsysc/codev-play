@@ -26,7 +26,7 @@ export class GameController<T extends GameService<any>> {
 
   async joinGameController(req: Request, res: Response) {
     try {
-      const userId = req.user!.id;
+      const userId = Number(req.user!.id); //ensure to match the int type on db
       const gameId = String(req.params!.gameId);
 
       const game = await this.service.joinGame(gameId, userId);
@@ -48,7 +48,10 @@ export class GameController<T extends GameService<any>> {
     }
   }
 
-  async resetGameController(req: Request<{ gameId: string }>, res: Response): Promise<void> {
+  async resetGameController(
+    req: Request<{ gameId: string }>,
+    res: Response,
+  ): Promise<void> {
     try {
       const game = await this.service.resetExistingGame(req.params.gameId);
       res.json(game);
