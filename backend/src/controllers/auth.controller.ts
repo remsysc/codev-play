@@ -98,10 +98,26 @@ export const login = async (
 
     return ApiResponse.success(
       res,
-      { user: userWithoutPassword /*token: token*/ },
+      { user: userWithoutPassword /*, token: token */ },
       "Login successful",
-    ); // For local development, return token for easier backend testing
+    );
+    // Return token in local development for easier testing
   } catch (error) {
     next(new AppError("Login failed", 500));
   }
+};
+
+export const logout = (req: Request, res: Response) => {
+  const isProd = process.env.NODE_ENV === "production";
+
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: "strict",
+    path: "/",
+  });
+
+  return res.status(200).json({
+    message: "Logged out successfully",
+  });
 };
