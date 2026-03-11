@@ -138,7 +138,7 @@ export default function LoginPage(): JSX.Element {
                                     htmlFor="emailorUsername"
                                     className="absolute -top-4 text-xs left-0 cursor-text peer-focus:text-xs peer-focus:-top-4 transition-all peer-focus:text-purple-700 peer-placeholder-shown:top-1 peer-placeholder-shown:text-sm text-white"
                                 >
-                                    Username or Email
+                                    Email
                                 </label>
                             </div>
                             <div className="relative mb-2">
