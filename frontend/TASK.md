@@ -129,7 +129,7 @@ This document contains step-by-step tasks for implementing the frontend UI for C
 
 - [x] Create game page route
 - [x] Implement choice selection
-- [ ] Add countdown timer
+- [x] Add countdown timer
 - [x] Display both players' choices
 - [x] Show round winner
 - [x] Track best-of-N series
