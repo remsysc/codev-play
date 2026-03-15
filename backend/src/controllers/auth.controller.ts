@@ -2,7 +2,12 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
 import logger from "@/utils/logger";
-import { createUser, findUserByEmail, findUserByLogin, findUserByUsername } from "@/models/user.model";
+import {
+  createUser,
+  findUserByEmail,
+  findUserByLogin,
+  findUserByUsername,
+} from "@/models/user.model";
 import { ApiResponse } from "@/utils/api-response";
 import AppError from "@/middleware/app-error";
 
@@ -12,7 +17,11 @@ interface registerBody {
   password: string;
 }
 
-export const register = async (req: Request<{}, {}, registerBody>, res: Response, next: NextFunction) => {
+export const register = async (
+  req: Request<{}, {}, registerBody>,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { email, username, password } = req.body;
 
@@ -33,7 +42,12 @@ export const register = async (req: Request<{}, {}, registerBody>, res: Response
 
     const { password: _, ...userWithoutPassword } = newUser;
 
-    return ApiResponse.success(res, { user: userWithoutPassword }, "User registered successfully", 201);
+    return ApiResponse.success(
+      res,
+      { user: userWithoutPassword },
+      "User registered successfully",
+      201,
+    );
   } catch (error) {
     next(new AppError("Registration failed", 500));
   }
@@ -48,7 +62,9 @@ export const login = async (
     const { username, password } = req.body;
     logger.info(`Login attempt for: ${username}`);
     const user = await findUserByLogin(username);
-    logger.info(`User lookup result for ${username}: ${user ? `id=${user.id}` : "not found"}`);
+    logger.info(
+      `User lookup result for ${username}: ${user ? `id=${user.id}` : "not found"}`,
+    );
     if (!user) {
       return ApiResponse.error(res, "Invalid credentials", 401);
     }
@@ -58,7 +74,11 @@ export const login = async (
     if (!isMatch) {
       return ApiResponse.error(res, "Invalid credentials", 401);
     }
-    const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET!, { expiresIn: "7d" });
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      process.env.JWT_SECRET!,
+      { expiresIn: "7d" },
+    );
 
     try {
       const isProd = process.env.NODE_ENV === "production";
@@ -76,7 +96,12 @@ export const login = async (
 
     const { password: _, ...userWithoutPassword } = user;
 
-    return ApiResponse.success(res, { user: userWithoutPassword }, "Login successful");
+    return ApiResponse.success(
+      res,
+      { user: userWithoutPassword /*, token: token */ },
+      "Login successful",
+    );
+    // Return token in local development for easier testing
   } catch (error) {
     next(new AppError("Login failed", 500));
   }
